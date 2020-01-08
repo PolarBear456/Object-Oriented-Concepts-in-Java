@@ -1,0 +1,34 @@
+import greenfoot.*;  
+
+/**
+ * Catch these with the bucket!
+ */
+public class Flower extends Actor
+{
+    private int speed;
+
+    /**
+     * Constructor: Initialise the speed to a somewhat random value.
+     */
+    public Flower()
+    {
+        speed = Greenfoot.getRandomNumber(5) + 1;
+    }
+    
+    /**
+     * Float along the FlowerWorld, slowly rotating.
+     */
+    public void act() 
+    {
+        setLocation(getX()-speed, getY());
+        turn(1);
+        
+        if (getX() == 0) 
+        {
+            FlowerWorld FlowerWorld = (FlowerWorld)getWorld();
+            FlowerWorld.addScore(-15);
+            FlowerWorld.removeObject(this);
+        }
+    }
+    
+}
