@@ -1,0 +1,103 @@
+import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+
+/**
+ * Try to catch the flowers with the bucket. By Leo Broemme.
+ */
+public class FlowerWorld extends World
+{
+    private int score;
+    private int time;
+    
+    public FlowerWorld()
+    {    
+        super(780, 360, 1);
+        prepare();
+        score = 0;
+        time = 2000;
+        showScore();
+        showTime();
+    }
+
+    public void act()
+    {
+        if (Greenfoot.getRandomNumber(100) < 3)
+        {
+            addObject(new Flower(), 779, Greenfoot.getRandomNumber(360));
+        }
+        
+        if (Greenfoot.getRandomNumber(100) < 1)
+        {
+            addObject(new Bee(), 779, Greenfoot.getRandomNumber(360));
+        }
+        
+        if (Greenfoot.getRandomNumber(100) < 6)
+        {
+            addObject(new Leaf(), 779, Greenfoot.getRandomNumber(360));
+        }
+        countTime();
+    }
+    
+    /**
+     * Add some points to our current score. (May be negative.)
+     * If the score falls below 0, game's up.
+     */
+    public void addScore(int points)
+    {
+        score = score + points;
+        showScore();
+        if (score < 0) 
+        {
+            Greenfoot.playSound("game-over.wav");
+            Greenfoot.stop();
+        }
+    }
+    
+    /**
+     * Show our current score on screen.
+     */
+    private void showScore()
+    {
+        showText("Score: " + score, 80, 25);
+    }
+
+    /**
+     * Count down the game time and display it. Stop the game 
+     * with a winning message when time is up.
+     */
+    private void countTime()
+    {
+        time--;
+        showTime();
+        if (time == 0)
+        {
+            showEndMessage();
+            Greenfoot.stop();
+        }
+    }
+
+    /**
+     * Show the remaining game time on screen.
+     */
+    private void showTime()
+    {
+        showText("Time: " + time, 700, 25);
+    }
+    
+    /**
+     * Show the end-of-game message on screen.
+     */
+    private void showEndMessage()
+    {
+        showText("Time is up - you win!", 390, 150);
+        showText("Your final score: " + score + " points", 390, 170);
+    }
+    
+    /**
+     * Prepare the world for the start of the program..
+     */
+    private void prepare()
+    {
+        Bucket Bucket = new Bucket();
+        addObject(Bucket, 128, 179);
+    }
+}
